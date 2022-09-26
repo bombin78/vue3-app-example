@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>Список пользователей</h3>
-    <PostItem
+    <post-item
       key="post.id"
       class="post"
       v-for="post in posts"
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import PostItem from "./PostItem.vue";
+import PostItem from './PostItem.vue';
 
 export default {
   components: {
