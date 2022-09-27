@@ -1,9 +1,9 @@
 <template>
   <input 
-	:value="modelValue" 
-	@input="updateInput" 
-	class="input" 
-	type="text" 
+    :value="modelValue"
+    @input="updateInput"
+    class="input"
+    type="text"
   >
 </template>
 
