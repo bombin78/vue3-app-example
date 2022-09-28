@@ -1,25 +1,23 @@
 <template>
   <div class="app">
     <h1>Страница с постами</h1>
-    <my-button
-      class="add-post"
-      @click="showDialog"
-    >
-      Создать пост
-    </my-button>
+    <my-button class="add-btn" @click="showDialog"> Создать пост </my-button>
     <my-dialog v-model:show="dialogVisible">
       <post-form @createPost="createPost" />
     </my-dialog>
-    <post-list 
+    <post-list
       :posts="posts"
       @remove-post="removePost"
+      v-if="!isPostsLoading"
     />
+    <div v-else>Идет загрузка ...</div>
   </div>
 </template>
 
 <script>
 import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
+import axios from "axios";
 
 export default {
   components: {
@@ -28,24 +26,9 @@ export default {
   },
   data() {
     return {
-      posts: [
-        {
-          id: 1,
-          title: "Пост о JavaScript 1",
-          body: "JavaScript - универсальный язык программирования 10",
-        },
-        {
-          id: 2,
-          title: "Пост о JavaScript 2",
-          body: "JavaScript - универсальный язык программирования 20",
-        },
-        {
-          id: 3,
-          title: "Пост о JavaScript 3",
-          body: "JavaScript - универсальный язык программирования 30",
-        },
-      ],
+      posts: [],
       dialogVisible: false,
+      isPostsLoading: false,
     };
   },
   methods: {
@@ -59,6 +42,22 @@ export default {
     showDialog() {
       this.dialogVisible = true;
     },
+    async fetchPosts() {
+      try {
+        this.isPostsLoading = true;
+        const response = await axios.get(
+          "https://jsonplaceholder.typicode.com/posts?_limit=10"
+        );
+        this.posts = response.data;
+      } catch (e) {
+        console.log("Ошибка");
+      } finally {
+        this.isPostsLoading = false;
+      }
+    },
+  },
+  mounted() {
+    this.fetchPosts();
   },
 };
 </script>
@@ -74,7 +73,7 @@ export default {
   padding: 20px;
 }
 
-.add-post {
+.add-btn {
   margin-top: 15px;
   margin-bottom: 30px;
 }
