@@ -42,6 +42,15 @@ export default {
       };
     },
   },
+  // Пример отслеживания объекта через watch
+  // watch: {
+  //   post: {
+  //     handler(newVal) {
+  //       console.log(newVal)
+  //     },
+  //     deep: true, // Глубокое отслеживание
+  //   }
+  // },
 };
 </script>
 
