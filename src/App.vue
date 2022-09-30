@@ -1,19 +1,14 @@
 <template>
   <div class="app">
-
     <h1>Страница с постами</h1>
 
+    <my-input class="app__search" v-model="searchQuery" placeholder="Поиск..." />
+
     <div class="app__btns">
-      <my-button 
-        class="app__add-btn" 
-        @click="showDialog"
-      >
+      <my-button class="app__add-btn" @click="showDialog">
         Создать пост
       </my-button>
-      <my-select 
-        v-model="selectedSort"
-        :options="sortOptions"
-      />
+      <my-select v-model="selectedSort" :options="sortOptions" />
     </div>
 
     <my-dialog v-model:show="dialogVisible">
@@ -22,7 +17,7 @@
 
     <!-- При использовании computed для сортировки -->
     <post-list
-      :posts="sortedPosts"
+      :posts="sortedAndSearchedPosts"
       @remove-post="removePost"
       v-if="!isPostsLoading"
     />
@@ -35,7 +30,6 @@
     /> -->
 
     <div v-else>Идет загрузка ...</div>
-
   </div>
 </template>
 
@@ -54,10 +48,11 @@ export default {
       posts: [],
       dialogVisible: false,
       isPostsLoading: false,
-      selectedSort: '',
+      selectedSort: "",
+      searchQuery: "",
       sortOptions: [
-        { value: 'title', name: 'По названию' },
-        { value: 'body', name: 'По содержимому' },
+        { value: "title", name: "По названию" },
+        { value: "body", name: "По содержимому" },
       ],
     };
   },
@@ -93,9 +88,16 @@ export default {
     sortedPosts() {
       // Создаем новый массив для сортировки
       return [...this.posts].sort((post1, post2) => {
-        return post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]);
+        return post1[this.selectedSort]?.localeCompare(
+          post2[this.selectedSort]
+        );
       });
-    }
+    },
+    sortedAndSearchedPosts() {
+      return this.sortedPosts.filter((post) =>
+        post.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    },
   },
   // Тоже самое поведение для сортировки с помощью watch
   // watch: {
@@ -119,15 +121,19 @@ export default {
 }
 
 .app {
-  margin: {
-    top: 15px;
-    bottom: 30px;
-  }
   padding: 20px;
+
+  &__search {
+    margin-top: 15px;
+  }
 
   &__btns {
     display: flex;
     justify-content: space-between;
+    margin: {
+      top: 15px;
+      bottom: 30px;
+    }
   }
 }
 </style>
