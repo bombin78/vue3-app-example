@@ -30,6 +30,20 @@
     /> -->
 
     <div v-else>Идет загрузка ...</div>
+
+    <div class="pagination">
+      <div
+        class="pagination__item"
+        v-for="pageNumber in total"
+        :key="pageNumber"
+        :class="{
+          'pagination__current': pageNumber === page,
+        }"
+        @click="changePage(pageNumber)"
+      >
+        {{ pageNumber }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -50,6 +64,9 @@ export default {
       isPostsLoading: false,
       selectedSort: "",
       searchQuery: "",
+      page: 1,
+      limit: 10,
+      total: 0,
       sortOptions: [
         { value: "title", name: "По названию" },
         { value: "body", name: "По содержимому" },
@@ -67,12 +84,20 @@ export default {
     showDialog() {
       this.dialogVisible = true;
     },
+    changePage(pageNumber) {
+      this.page=pageNumber;
+      this.fetchPosts();
+    },
     async fetchPosts() {
       try {
         this.isPostsLoading = true;
-        const response = await axios.get(
-          "https://jsonplaceholder.typicode.com/posts?_limit=10"
-        );
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts',{
+          params: {
+            _page: this.page, 
+            _limit: this.limit, 
+          }
+        });
+        this.total = Math.ceil(response.headers['x-total-count'] / this.limit);
         this.posts = response.data;
       } catch (e) {
         console.log("Ошибка");
@@ -134,6 +159,20 @@ export default {
       top: 15px;
       bottom: 30px;
     }
+  }
+}
+
+.pagination {
+  display: flex;
+  margin-top: 15px;
+
+  &__item {
+    border: 1px solid black;
+    padding: 10px;
+  }
+
+  &__current {
+    border: 2px solid teal;
   }
 }
 </style>
