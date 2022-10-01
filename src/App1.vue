@@ -1,8 +1,8 @@
 <template>
   <div class="app">
-    <h1>Страница с постами</h1>
+    <h1>Страница с постами и пагинацией</h1>
 
-    <my-input class="app__search" v-model="searchQuery" placeholder="Поиск..." />
+    <my-input class="app__search" v-model="searchQuery" placeholder="Поиск по названию..." />
 
     <div class="app__btns">
       <my-button class="app__add-btn" @click="showDialog">
@@ -15,19 +15,12 @@
       <post-form @createPost="createPost" />
     </my-dialog>
 
-    <!-- При использовании computed для сортировки -->
+    <!-- При использовании computed для сортировки и поиска -->
     <post-list
       :posts="sortedAndSearchedPosts"
       @remove-post="removePost"
       v-if="!isPostsLoading"
     />
-
-    <!-- При использовании watch для сортировки -->
-    <!-- <post-list
-      :posts="posts"
-      @remove-post="removePost"
-      v-if="!isPostsLoading"
-    /> -->
 
     <div v-else>Идет загрузка ...</div>
 
@@ -110,31 +103,22 @@ export default {
     this.fetchPosts();
   },
   computed: {
-    sortedPosts() {
-      // Создаем новый массив для сортировки
-      return [...this.posts].sort((post1, post2) => {
-        return post1[this.selectedSort]?.localeCompare(
-          post2[this.selectedSort]
-        );
-      });
-    },
     sortedAndSearchedPosts() {
-      return this.sortedPosts.filter((post) =>
+      return this.posts.filter((post) =>
         post.title.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
     },
   },
-  // Тоже самое поведение для сортировки с помощью watch
-  // watch: {
-  //   selectedSort(newValue) {
-  //     // Мутируем исходный массив posts
-  //     this.posts.sort((post1, post2) => {
-  //       return post1[newValue]?.localeCompare(post2[newValue]);
-  //       // или
-  //       // return post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]);
-  //     });
-  //   },
-  // }
+  watch: {
+    selectedSort(newValue) {
+      // Мутируем массив posts
+      this.posts.sort((post1, post2) => {
+        return post1[newValue]?.localeCompare(post2[newValue]);
+        // или
+        // return post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]);
+      });
+    },
+  },
 };
 </script>
 
