@@ -16,8 +16,8 @@
 
 	cursor: pointer;
 
-	background: none;
-	color: teal;
-	border: 1px solid teal;
+	background: #aaa;
+	color: #fff;
+	border: 1px solid #aaa;
   }
   </style>

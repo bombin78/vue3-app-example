@@ -6,6 +6,11 @@
     </div>
     <div class="post__btns">
       <my-button
+        @click="$router.push(`${$route.path}/${post.id}`)"
+      >
+        Открыть
+      </my-button>
+      <my-button
         @click="$emit('removePost', post)"
       >
         Удалить
@@ -25,13 +30,22 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .post {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 15px;
   padding: 15px;
-  border: 1px solid teal;
+  border: 1px solid #ccc;
+
+  &__btns {
+    display: flex;
+    margin-left: 20px;
+
+    :last-child {
+      margin-left: 12px;
+    }
+  }
 }
 </style>
