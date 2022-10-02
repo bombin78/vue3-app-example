@@ -1,9 +1,5 @@
 <template>
-  <div 
-	class="dialog" 
-	v-if="show" 
-	@click="hideDialog"
-  >
+  <div class="dialog" v-if="show" @click="hideDialog">
     <div @click.stop class="dialog__content">
       <slot></slot>
     </div>
@@ -11,19 +7,15 @@
 </template>
 
 <script>
+import toggleMixins from '@/mixins/toggleMixin';
+
 export default {
   name: "my-dialog",
-  props: {
-    show: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  methods: {
-    hideDialog() {
-		this.$emit('update:show', false);
+  mixins: [toggleMixins],
+  	// Демонстрация работы миксина, смотри вывод в консоль
+	mounted() {
+		console.log('nodal MyDialog mounted');
 	},
-  },
 };
 </script>
 
