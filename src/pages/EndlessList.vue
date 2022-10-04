@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <h1>Страница с автоматической подгрузкой постов</h1>
+    <h1>Страница с автоподгрузкой постов</h1>
 
     <my-input
       class="app__search"
@@ -20,7 +20,7 @@
       <post-form @createPost="createPost" />
     </my-dialog>
 
-    <!-- При использовании watch для сортировки, а computed для поиска -->
+    <!-- computed для сортировки и поиска постов -->
     <post-list
       :posts="sortedAndSearchedPosts"
       @remove-post="removePost"

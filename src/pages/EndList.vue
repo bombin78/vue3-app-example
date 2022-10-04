@@ -20,7 +20,7 @@
       <post-form @createPost="createPost" />
     </my-dialog>
 
-    <!-- При использовании computed для сортировки и поиска -->
+    <!-- watch для сортировки, а computed для поиска постов -->
     <post-list
       :posts="sortedAndSearchedPosts"
       @remove-post="removePost"

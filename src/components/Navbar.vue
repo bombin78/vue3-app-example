@@ -14,7 +14,10 @@
 			Список с пагинацией
 		</my-button>
 		<my-button @click="$router.push('/endless-list')">
-			Список с автоматической подгрузкой
+			Список с автоподгрузкой
+		</my-button>
+		<my-button @click="$router.push('/endless-list-store')">
+			Список с автоподгрузкой + store
 		</my-button>
     </div>
   </div>

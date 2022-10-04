@@ -6,6 +6,7 @@ import Main						from '@/pages/Main';
 import About					from '@/pages/About';
 import EndList					from '@/pages/EndList';
 import EndlessList				from '@/pages/EndlessList';
+import EndlessListWithStore		from '@/pages/EndlessListWithStore';
 import ListItem					from '@/pages/ListItem';
 
 
@@ -33,6 +34,10 @@ const routes = [
 	{
 		path: '/endless-list/:id',
 		component: ListItem,
+	},
+	{
+		path: '/endless-list-store',
+		component: EndlessListWithStore,
 	},
 ];
 
