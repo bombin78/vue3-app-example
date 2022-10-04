@@ -17,7 +17,10 @@
 			Список с автоподгрузкой
 		</my-button>
 		<my-button @click="$router.push('/endless-list-store')">
-			Список с автоподгрузкой + store
+			Список + store
+		</my-button>
+		<my-button @click="$router.push('/endless-list-composition-api')">
+			Список + Composition API
 		</my-button>
     </div>
   </div>
